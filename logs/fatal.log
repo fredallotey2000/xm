@@ -1,0 +1,9 @@
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:26:09Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:26:36Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:28:57Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:31:01Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:32:51Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T19:26:25Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T19:34:19Z"}
+{"error msg":"Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-01T19:34:33Z"}
+{"error msg":"Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-01T19:34:43Z"}

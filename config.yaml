@@ -1,0 +1,10 @@
+logs-path: ./logs/
+logs-extension: .log
+
+http-server-ip: :8080
+mysql-connstr: root2:root@tcp(:3306)/dns?multiStatements=true
+
+kafka-server-ip: localhost:9092
+kafka-group-id: companyGroup
+kafka-auto-offset-reset: earliest
+kafka-topic: companyTopic

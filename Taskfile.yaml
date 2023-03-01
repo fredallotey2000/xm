@@ -1,0 +1,41 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  up:
+    cmds:
+      - docker-compose up -d --build
+
+  down:
+    cmds:
+      - docker-compose down
+
+  build:
+    cmds: 
+      - go build -o app main.go
+  
+  test:
+    cmds:
+      - go test -v ./...
+
+  lint:
+    cmds:
+      - golangci-lint run
+
+  acceptaance-test:
+    cmds:
+      - docker-compose up -d --build
+      - go test -tags=e2e -v ./...
+
+  integration-test:
+    cmds:
+      - docker-compose up -d --build db 
+      - go test -tags=integration -v ./...
+    env:
+      DNS_CONNECTION_STRING: root:root@tcp(:3306)/dns?multiStatements=true
+      
+    
