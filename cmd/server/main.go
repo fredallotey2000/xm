@@ -21,7 +21,7 @@ import (
 )
 
 //channels for shared memory communication betweeen message queue(kafka) and http request
-var producerChan = make(chan kafka.Message)
+var producerChan = make(chan kafka.Message,1)
 
 func openLogFile(logFileName string) *os.File {
 

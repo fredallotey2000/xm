@@ -21,10 +21,16 @@ type Response struct {
 
 //writeResponse writes the response to the http reponse object
 func writeResponse(w http.ResponseWriter, status int, data interface{}, err error) {
+	if data == nil {
+		w.WriteHeader(status)
+		fmt.Fprint(w)
+		return
+	}
 	if err != nil {
 		if err == sql.ErrNoRows {
 			w.WriteHeader(http.StatusNotFound)
 			fmt.Fprint(w, "No record found")
+			return
 		}
 		resp := ErrorResp{
 			Error: fmt.Sprint(err),
@@ -32,8 +38,8 @@ func writeResponse(w http.ResponseWriter, status int, data interface{}, err erro
 		w.WriteHeader(http.StatusInternalServerError)
 		if err := json.NewEncoder(w).Encode(resp); err != nil {
 			fmt.Fprintf(w, "error encoding resp %v:%v", resp, err)
+			return
 		}
-		return
 	}
 	w.WriteHeader(status)
 	if status == http.StatusCreated {

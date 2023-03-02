@@ -77,7 +77,7 @@ func (h *companyHandler) UpdateCompany(w http.ResponseWriter, r *http.Request) {
 	// Read the request body
 	if err := json.NewDecoder(r.Body).Decode(&cmp); err != nil {
 		h.lg.HttpError(r, "UpdateCompany", err)
-		writeResponse(w, http.StatusBadRequest, [2]string{}, ErrorBadRequest)
+		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
 		return
 	}
 	kfMsg := kf.Message{
@@ -86,7 +86,7 @@ func (h *companyHandler) UpdateCompany(w http.ResponseWriter, r *http.Request) {
 		RequestMethod: r.Method,
 	}
 	h.producerChan <- kfMsg
-
+	writeResponse(w, http.StatusAccepted, nil, nil)
 }
 
 // function to receive and process http company delete requests
@@ -100,6 +100,7 @@ func (h *companyHandler) DeleteCompany(w http.ResponseWriter, r *http.Request) {
 		RequestMethod: r.Method,
 	}
 	h.producerChan <- kfMsg
+	writeResponse(w, http.StatusAccepted, nil, nil)
 
 }
 

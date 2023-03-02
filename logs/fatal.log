@@ -1,75 +1,12 @@
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:26:09Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:26:36Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:28:57Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:31:01Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T18:32:51Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T19:26:25Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-01T19:34:19Z"}
-{"error msg":"Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-01T19:34:33Z"}
-{"error msg":"Error 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-01T19:34:43Z"}
-{"error msg":"Error 1045 (28000): Access denied for user 'root2'@'localhost' (using password: YES)","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:46:08Z"}
-{"error msg":"Error 1045 (28000): Access denied for user 'bsystems'@'localhost' (using password: YES)","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:48:54Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:49:35Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:50:46Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:52:08Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:53:46Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:54:24Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:54:55Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:55:45Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:56:42Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:57:35Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:58:08Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:58:43Z"}
-{"error msg":"dial tcp 20.46.42.147:3306: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","function":"db ping","level":"fatal","msg":"debug","time":"2023-03-02T10:59:07Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:02:48Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:08:23Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:09:26Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:09:51Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:12:49Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:14:14Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:21:21Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:24:11Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:25:11Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:28:00Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:28:53Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:32:02Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:41:53Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:42:29Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:43:35Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:51:03Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T11:51:40Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T14:52:38Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T14:57:05Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:01:01Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:03:27Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:08:07Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:12:57Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:15:28Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:16:10Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:17:27Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:23:23Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:24:31Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:26:00Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:26:41Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:28:12Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:28:48Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:30:08Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:34:14Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:35:47Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:37:45Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:38:30Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:52:30Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:55:06Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T15:56:16Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:01:56Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:02:28Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:05:14Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:05:53Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:07:18Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:18:01Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:19:06Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:20:17Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:23:07Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:24:20Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:31:42Z"}
-{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T16:40:29Z"}
+{"error":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"","time":"2023-03-02T18:19:50Z"}
+{"error":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"","time":"2023-03-02T18:20:39Z"}
+{"error":null,"function":"starting mysql database...","level":"fatal","msg":"","time":"2023-03-02T18:54:19Z"}
+{"error":"dfd","function":"starting mysql database...","level":"fatal","msg":"","time":"2023-03-02T18:55:13Z"}
+{"error":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"","time":"2023-03-02T18:57:19Z"}
+{"function":"database started successfully","level":"fatal","msg":"","time":"2023-03-02T18:57:25Z"}
+{"error":"dfd","function":"starting mysql database...","level":"fatal","msg":"","time":"2023-03-02T18:57:40Z"}
+{"error":null,"function":"starting mysql database...","level":"fatal","msg":"","time":"2023-03-02T18:58:30Z"}
+{"function":"starting mysql database...","level":"fatal","msg":"","time":"2023-03-02T18:58:40Z"}
+{"function":"database started successfully","level":"fatal","msg":"","time":"2023-03-02T18:58:54Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T18:59:38Z"}
+{"error msg":"context deadline exceeded","function":"http server shutdown","level":"fatal","msg":"debug","time":"2023-03-02T18:59:59Z"}

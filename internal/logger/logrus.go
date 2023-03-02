@@ -78,8 +78,7 @@ func (l *logger) Fatal(fn string, err error) {
 
 //Info, writes app usage info messages to the log file
 func (l *logger) Info(fn string) {
-	l.fatalLog.Info("hello")
-	l.fatalLog.WithFields(
+	l.infoLog.WithFields(
 		logrus.Fields{
 			"info": fn,
 		},
