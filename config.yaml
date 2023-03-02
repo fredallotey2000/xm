@@ -2,9 +2,7 @@ logs-path: ./logs/
 logs-extension: .log
 
 http-server-ip: :8080
-#mysql-connstr: root2:root@tcp(:3306)/xm?multiStatements=true
-
-mysql-connstr: bsystems:bsystems123$@tcp(20.46.42.147:3306)/xm?multiStatements=true
+mysql-connstr: root2:root@tcp(:3306)/xm?multiStatements=true
 
 kafka-server-ip: localhost:9092
 kafka-group-id: companyGroup
