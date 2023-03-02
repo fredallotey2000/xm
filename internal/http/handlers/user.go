@@ -51,7 +51,7 @@ func (h *userHandler) AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Validates the JSON object and makes sure it meets the required request fields
-	if b, err := h.validator.ValidateJSON(user); !b {
+	if err := h.validator.ValidateJSON(user); err != nil {
 		h.lg.HttpError(r, "AuthenticateUser", err)
 		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
 		return

@@ -14,8 +14,6 @@ import (
 	cmp "xm/pkg/company"
 
 	"github.com/segmentio/kafka-go"
-
-	"github.com/gorilla/mux"
 )
 
 type ErrorResp struct {
@@ -61,33 +59,6 @@ type messageQueue struct {
 	conChan chan Message
 }
 
-// //creates and start a new consumer
-// func NewKafkaConsumer(cmpConsumerChan chan Message, conf confg.Configuration, log lgg.Logger, cs cmp.Service) {
-// 	mq := &messageQueue{
-// 		service: cs,
-// 		lg:      log,
-// 		conChan: cmpConsumerChan,
-// 	}
-// 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-// 		"bootstrap.servers": conf.KafkaConfig.ServerIp,
-// 		"group.id":          conf.KafkaConfig.GroupId,
-// 		"auto.offset.reset": conf.KafkaConfig.AutoOffsetReset,
-// 	})
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer c.Close()
-// 	c.Subscribe(conf.KafkaConfig.Topic, nil)
-// 	for {
-// 		msg, err := c.ReadMessage(-1)
-// 		if err != nil {
-// 			//lgg.Logger.MqError("Consumer", msg, err)
-// 			fmt.Printf("Consumer error: #{err} (#{msg}\n)")
-// 		}
-// 		go mq.processMessage(msg)
-// 	}
-// }
-
 //go routine to process read messages off topic
 func (mq *messageQueue) processMessage(msg kafka.Message) {
 	var m Message
@@ -100,11 +71,7 @@ func (mq *messageQueue) processMessage(msg kafka.Message) {
 		fmt.Printf("Consumer error: %v (%v)\n", err, msg)
 		//lgg.Logger.MqError("Consumer", msg, err)
 	}
-	switch m.Request.Method {
-	case http.MethodPost:
-		mq.addCompany(m)
-	case http.MethodGet:
-		mq.getCompany(m)
+	switch m.RequestMethod {
 	case http.MethodDelete:
 		mq.deleteCompany(m)
 	case http.MethodPatch:
@@ -112,90 +79,20 @@ func (mq *messageQueue) processMessage(msg kafka.Message) {
 	}
 }
 
-//function to add company to db and return http response
-func (mq *messageQueue) addCompany(m Message) {
-	hops, err := mq.service.AddCompany(m.Request.Context(), cmp.Company(m.Company))
-	if err != nil {
-		mq.lg.HttpError(m.Request, "CreateCompany", err)
-		writeResponse(m.ResponseWriter, http.StatusInternalServerError, nil, err)
-		return
-	}
-	writeResponse(m.ResponseWriter, http.StatusCreated, hops, nil)
-}
-
-//function to get company from db and return http response
-func (mq *messageQueue) getCompany(m Message) {
-	vars := mux.Vars(m.Request)
-	compId := vars["companyId"]
-
-	comp, err := mq.service.GetCompany(m.Request.Context(), compId)
-	if err != nil {
-		mq.lg.HttpError(m.Request, "GetCompany", err)
-		writeResponse(m.ResponseWriter, http.StatusInternalServerError, nil, err)
-		return
-	}
-
-	writeResponse(m.ResponseWriter, http.StatusOK, comp, nil)
-}
-
 //function to update company info
 func (mq *messageQueue) updateCompany(m Message) {
-	cmp, err := mq.service.ModifyCompany(m.Request.Context(), cmp.Company(m.Company), m.Id)
+	_, err := mq.service.ModifyCompany(context.Background(), cmp.Company(m.Company), m.Id)
 	if err != nil {
-		mq.lg.HttpError(m.Request, "updateCompany", err)
-		writeResponse(m.ResponseWriter, http.StatusInternalServerError, nil, err)
-		return
+		mq.lg.MqError("Patching", "", err)
 	}
-	writeResponse(m.ResponseWriter, http.StatusCreated, cmp, nil)
 }
 
 //function to delete company
 func (mq *messageQueue) deleteCompany(m Message) {
 
-	compId, err := mq.service.RemoveCompany(m.Request.Context(), m.Id)
+	_, err := mq.service.RemoveCompany(context.Background(), m.Id)
 	if err != nil {
-		mq.lg.HttpError(m.Request, "DeleteCompany", err)
-		writeResponse(m.ResponseWriter, http.StatusInternalServerError, nil, err)
-		return
+		mq.lg.MqError("Deletion", "", err)
 	}
-	writeResponse(m.ResponseWriter, http.StatusOK, compId, nil)
+
 }
-
-//helper fucntion for writing http reponse
-func writeResponse(w http.ResponseWriter, status int, data interface{}, err error) {
-	w.WriteHeader(status)
-	if err != nil {
-		resp := ErrorResp{
-			Error: fmt.Sprint(err),
-		}
-		if err := json.NewEncoder(w).Encode(resp); err != nil {
-			fmt.Fprintf(w, "error encoding resp %v:%s", resp, err)
-		}
-		return
-	}
-	if err := json.NewEncoder(w).Encode(data); err != nil {
-		fmt.Fprintf(w, "error encoding resp %v:%s", data, err)
-	}
-}
-
-// func (mq *messageQueue) addCompany(m Message) {
-// 	//Get the Databank location from the service layer
-// 	ctx := context.Background()
-// 	var respWriter http.ResponseWriter
-// 	var req *http.Request
-
-// 	if m.Request != nil {
-// 		ctx = m.Request.Context()
-// 		respWriter = m.ResponseWriter
-// 		req = m.Request
-// 	}
-
-// 	company, err := mq.service.AddCompany(ctx, cmp.Company(m.company))
-// 	if err != nil {
-// 		mq.lg.HttpError(req, "CreateCompany", err)
-// 		writeResponse(respWriter, http.StatusInternalServerError, nil, err)
-// 		return
-// 	}
-// 	//write response wiht datbank location to http response
-// 	writeResponse(respWriter, http.StatusCreated, company, nil)
-// }

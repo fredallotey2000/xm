@@ -53,19 +53,19 @@ func (h *companyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Validates the JSON object and makes sure it meets the required request fields
-	if b, err := h.validator.ValidateJSON(comp); !b {
+	if err := h.validator.ValidateJSON(comp); err != nil {
 		h.lg.HttpError(r, "CreateCompany", err)
 		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
 		return
 	}
 
-	//push onto kafka producer for processing
-	kfMsg := kf.Message{
-		Company:        comp,
-		Request:        r,
-		ResponseWriter: w,
+	cmp, err := h.service.AddCompany(r.Context(), comp)
+	if err != nil {
+		h.lg.HttpError(r, "CreateCompany", err)
+		writeResponse(w, http.StatusInternalServerError, nil, err)
+		return
 	}
-	h.producerChan <- kfMsg
+	writeResponse(w, http.StatusCreated, cmp, nil)
 }
 
 // function to receive and process http patch to update a new company
@@ -81,10 +81,9 @@ func (h *companyHandler) UpdateCompany(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	kfMsg := kf.Message{
-		Company:        cmp,
-		Id:             compId,
-		Request:        r,
-		ResponseWriter: w,
+		Company:       cmp,
+		Id:            compId,
+		RequestMethod: r.Method,
 	}
 	h.producerChan <- kfMsg
 
@@ -97,11 +96,9 @@ func (h *companyHandler) DeleteCompany(w http.ResponseWriter, r *http.Request) {
 
 	//push onto kafka producer for processing
 	kfMsg := kf.Message{
-		Id:             compId,
-		Request:        r,
-		ResponseWriter: w,
+		Id:            compId,
+		RequestMethod: r.Method,
 	}
-
 	h.producerChan <- kfMsg
 
 }
@@ -110,12 +107,14 @@ func (h *companyHandler) DeleteCompany(w http.ResponseWriter, r *http.Request) {
 func (h *companyHandler) GetCompany(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	compId := vars["companyId"]
-	kfMsg := kf.Message{
-		Id:             compId,
-		Request:        r,
-		ResponseWriter: w,
+
+	comp, err := h.service.GetCompany(r.Context(), compId)
+	if err != nil {
+		h.lg.HttpError(r, "GetCompany", err)
+		writeResponse(w, http.StatusInternalServerError, nil, err)
+		return
 	}
-	h.producerChan <- kfMsg
+	writeResponse(w, http.StatusOK, comp, nil)
 }
 
 // Checks if service is up and running

@@ -1,5 +1,5 @@
 package validator
 
 type Validator interface {
-	ValidateJSON(data interface{}) (bool, error)
+	ValidateJSON(data interface{}) (error)
 }

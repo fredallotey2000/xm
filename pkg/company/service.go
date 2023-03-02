@@ -28,6 +28,7 @@ func NewCompanyService(r Repository) Service {
 // CalculatePath gets the data bank location for a repository
 func (s *service) AddCompany(ctx context.Context, comp Company) (string, error) {
 	comp.ID = uuid.New().String()
+
 	compId, err := s.repo.CreateCompany(ctx, comp)
 	if err != nil {
 		return "", err

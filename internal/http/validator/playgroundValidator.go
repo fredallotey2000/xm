@@ -16,10 +16,10 @@ func NewPlayGroundValidator() Validator {
 }
 
 // validates the json object passed as argument
-func (v *_validator) ValidateJSON(data interface{}) (bool, error) {
+func (v *_validator) ValidateJSON(data interface{}) (error) {
 	// Validates the JSON object and makes sure it meets the required request fields
 	if err := v.validator.Struct(data); err != nil {
-		return false, err
+		return err
 	}
-	return true, nil
+	return nil
 }

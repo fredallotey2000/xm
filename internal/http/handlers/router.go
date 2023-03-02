@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -10,7 +11,7 @@ import (
 var ErrorBadRequest = errors.New("invalid request body")
 
 type ErrorResp struct {
-	Error string
+	Error string `json:"error,omitempty"`
 }
 
 type Response struct {
@@ -20,18 +21,30 @@ type Response struct {
 
 //writeResponse writes the response to the http reponse object
 func writeResponse(w http.ResponseWriter, status int, data interface{}, err error) {
-	w.WriteHeader(status)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprint(w, "No record found")
+		}
 		resp := ErrorResp{
 			Error: fmt.Sprint(err),
 		}
+		w.WriteHeader(http.StatusInternalServerError)
 		if err := json.NewEncoder(w).Encode(resp); err != nil {
-			fmt.Fprintf(w, "error encoding resp %v:%s", resp, err)
+			fmt.Fprintf(w, "error encoding resp %v:%v", resp, err)
 		}
 		return
 	}
+	w.WriteHeader(status)
+	if status == http.StatusCreated {
+		s, _ := data.(string)
+		w.Header().Add("location", s)
+		fmt.Fprint(w)
+		return
+	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
-		fmt.Fprintf(w, "error encoding resp %v:%s", data, err)
+		fmt.Fprintf(w, "error encoding resp %v:%v", data, err)
+		return
 	}
 }
 

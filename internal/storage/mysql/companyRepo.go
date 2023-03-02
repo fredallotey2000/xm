@@ -1,11 +1,9 @@
 package mysql
 
 import (
-	cmp "xm/pkg/company"
 	"context"
 	"database/sql"
-
-	"github.com/google/uuid"
+	cmp "xm/pkg/company"
 )
 
 type companyRepo struct {
@@ -23,8 +21,7 @@ func NewCompanyRepo(d *sql.DB) cmp.Repository {
 func (f *companyRepo) CreateCompany(ctx context.Context, comp cmp.Company) (string, error) {
 	stmt, _ := f.db.Prepare("INSERT INTO companies VALUES(?, ?, ?, ?, ?, ?)")
 	//execute
-	compId := uuid.New().String()
-	res, err := stmt.ExecContext(ctx, compId, comp.Name, comp.Description, comp.AmountOfEmployees, comp.Registered, comp.Type)
+	res, err := stmt.ExecContext(ctx, comp.ID, comp.Name, comp.Description, comp.AmountOfEmployees, comp.Registered, comp.Type)
 	if err != nil {
 		return "", err
 	}
@@ -32,7 +29,7 @@ func (f *companyRepo) CreateCompany(ctx context.Context, comp cmp.Company) (stri
 	if err != nil || rows < 1 {
 		return "", err
 	}
-	return compId, nil
+	return comp.ID, nil
 
 }
 
@@ -55,7 +52,7 @@ func (f *companyRepo) UpdateCompany(ctx context.Context, comp cmp.Company, compI
 //retrieve all drones
 func (f *companyRepo) GetCompany(ctx context.Context, companyId string) (*cmp.Company, error) {
 	var comp = cmp.Company{}
-	SQL := "SELECT id,name,description,amountOfEmployees,registered,type FROM companies d WWHERE id=?"
+	SQL := "SELECT id,name,description,amountOfEmployees,registered,type FROM companies d WHERE id=?"
 	row := f.db.QueryRowContext(ctx, SQL, companyId)
 	err := row.Scan(&comp.ID, &comp.Name, &comp.Description, &comp.AmountOfEmployees, &comp.Registered, &comp.Type)
 	if err != nil {
@@ -66,7 +63,7 @@ func (f *companyRepo) GetCompany(ctx context.Context, companyId string) (*cmp.Co
 
 //remove a company
 func (f *companyRepo) DeleteCompany(ctx context.Context, companyId string) (string, error) {
-	stmt, _ := f.db.Prepare("DELETE FROM drones d WHERE d.droneId = ?")
+	stmt, _ := f.db.Prepare("DELETE FROM companies d WHERE d.id = ?")
 	res, err_ := stmt.ExecContext(ctx, companyId)
 	if err_ != nil {
 		return "", err_

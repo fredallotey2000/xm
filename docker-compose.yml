@@ -70,36 +70,3 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
 
-
-# App Service
-  db:
-    image: mysql/mysql-server:latest
-    container_name: db
-    cap_add:
-      - SYS_NICE
-    restart: always
-    environment:
-      - MYSQL_DATABASE=dns
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=root2
-      - MYSQL_PASSWORD=root
-      - bind_address=*
-    ports:
-      - '3306:3306'
-      
-# App Service
-  app:
-    # Configuration for building the docker image for the service
-    container_name: server
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - db
-    ports:
-      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
-    environment: # Pass environment variables to the service
-      - DNS_CONNECTION_STRING=root2:root@tcp(db:3306)/xm?multiStatements=true
-      - DNS_PORT=8080
-    restart: on-failure  
-

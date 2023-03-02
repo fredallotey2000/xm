@@ -6,14 +6,14 @@ CREATE TABLE IF NOT EXISTS users (
   PRIMARY KEY (email)
 );
 CREATE TABLE IF NOT EXISTS  companies (
-  id BINARY(16) NOT NULL,
+  id varchar(100) NOT NULL,
   name varchar(15) NOT NULL,
   description varchar(3000) DEFAULT NULL,
   amountOfEmployees int NOT NULL,
   registered boolean NOT NULL,
   type varchar(30) NOT NULL,
 
-  PRIMARY KEY (email)
+  PRIMARY KEY (name)
 );
 DELETE FROM users WHERE email IN ('u1@xm.com','u2@xm.com');
 
