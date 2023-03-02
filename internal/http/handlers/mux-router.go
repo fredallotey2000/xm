@@ -83,7 +83,7 @@ func (m *muxRouter) ConfigureCompanyHandler() {
 		Handler(http.HandlerFunc(m.companyH.CheckHealth))
 
 	m.router.Methods("GET").Path("/api/v1/" + "companies/{companyId}").
-		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.GetCompany)))
+		Handler(http.HandlerFunc((m.companyH.GetCompany)))
 
 	m.router.Methods("POST").Path("/api/v1/" + "companies").
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.CreateCompany)))
