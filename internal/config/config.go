@@ -24,6 +24,10 @@ type LoggerConfig struct {
 	LogExtension string
 }
 
+type DefaulConfig struct {
+	JwtSecret string
+}
+
 // type mysqlConfig struct {
 // 	env             string
 // 	logLevel        string

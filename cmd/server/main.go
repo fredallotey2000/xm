@@ -23,13 +23,6 @@ import (
 //channels for shared memory communication betweeen message queue(kafka) and http request
 var producerChan = make(chan kafka.Message)
 
-func main() {
-	log.Println("starting servers...")
-	if err := Run(); err != nil {
-		log.Fatal(err)
-	}
-}
-
 func openLogFile(logFileName string) *os.File {
 
 	f, err := os.OpenFile("./logs/"+logFileName+".log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
@@ -40,8 +33,9 @@ func openLogFile(logFileName string) *os.File {
 
 }
 
-func Run() error {
+func main() {
 
+	log.Println("starting servers...")
 	//loads configuration for the entire microservice
 	conf := confg.NewViperConfig("")
 
@@ -84,15 +78,12 @@ func Run() error {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 
 	//create and start a mux router to serve http requests
+	
 	handler.NewMuxRouter(
 		cmpH,
 		userH,
 		conf,
 		sigs,
 		logger)
-	if err != nil {
-		return err
-	}
 
-	return nil
 }

@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS  companies (
 );
 DELETE FROM users WHERE email IN ('u1@xm.com','u2@xm.com');
 
-INSERT INTO users VALUES ('u1','u1@xm.com','','admin');
-INSERT INTO users VALUES ('u2','u2@xm.com','','user');
+INSERT INTO users VALUES ('u1','u1@xm.com','$2y$14$ONnuhppjqbZmtObZa0xBn.jq0kUcf3cS8x3EN9adCR3r2qThJbd72','admin');
+INSERT INTO users VALUES ('u2','u2@xm.com','$2y$14$ONnuhppjqbZmtObZa0xBn.jq0kUcf3cS8x3EN9adCR3r2qThJbd72','user');

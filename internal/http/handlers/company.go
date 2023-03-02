@@ -8,7 +8,6 @@ import (
 	lgg "xm/internal/logger"
 	cmp "xm/pkg/company"
 
-
 	"github.com/gorilla/mux"
 
 	kf "xm/internal/kafka"
@@ -50,13 +49,13 @@ func (h *companyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
 	// Read the request body
 	if err := json.NewDecoder(r.Body).Decode(&comp); err != nil {
 		h.lg.HttpError(r, "CreateCompany", err)
-		WriteResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
+		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
 		return
 	}
 	//Validates the JSON object and makes sure it meets the required request fields
 	if b, err := h.validator.ValidateJSON(comp); !b {
 		h.lg.HttpError(r, "CreateCompany", err)
-		WriteResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
+		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
 		return
 	}
 
@@ -78,7 +77,7 @@ func (h *companyHandler) UpdateCompany(w http.ResponseWriter, r *http.Request) {
 	// Read the request body
 	if err := json.NewDecoder(r.Body).Decode(&cmp); err != nil {
 		h.lg.HttpError(r, "UpdateCompany", err)
-		WriteResponse(w, http.StatusBadRequest, [2]string{}, ErrorBadRequest)
+		writeResponse(w, http.StatusBadRequest, [2]string{}, ErrorBadRequest)
 		return
 	}
 	kfMsg := kf.Message{
@@ -116,12 +115,10 @@ func (h *companyHandler) GetCompany(w http.ResponseWriter, r *http.Request) {
 		Request:        r,
 		ResponseWriter: w,
 	}
-
 	h.producerChan <- kfMsg
 }
 
 // Checks if service is up and running
 func (h *companyHandler) CheckHealth(w http.ResponseWriter, r *http.Request) {
-	WriteResponse(w, http.StatusOK, "Healthy", nil)
+	writeResponse(w, http.StatusOK, "Healthy", nil)
 }
-

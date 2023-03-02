@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	usr "xm/pkg/user"
+	//usr "xm/pkg/user"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -18,21 +18,24 @@ type JWTClaim struct {
 	Email    string `json:"email"`
 	jwt.StandardClaims
 }
-var AuthenticatedUser usr.User
 
-// func GenerateJWT(email, password string) (string, error) {
-// 	expirationTime := time.Now().Add(1 * time.Hour)
-// 	claims := &JWTClaim{
-// 		Email:    email,
-// 		Password: password,
-// 		StandardClaims: jwt.StandardClaims{
-// 			ExpiresAt: expirationTime.Unix(),
-// 		},
-// 	}
-// 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-// 	tokenString, err := token.SignedString(jwtKey)
-// 	return tokenString, err
-// }
+//var AuthenticatedUser usr.User
+
+func GenerateJWT(email, password string) (string, error) {
+	expirationTime := time.Now().Add(1 * time.Hour)
+	claims := &JWTClaim{
+		Email:    email,
+		Password: password,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: expirationTime.Unix(),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	//	tokenString, err := token.SignedString([]byte(confg.DefaulConfig.JwtSecret))
+
+	tokenString, err := token.SignedString([]byte(jwtKey))
+	return tokenString, err
+}
 
 func JWTAuth(original func(w http.ResponseWriter, r *http.Request)) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -81,6 +84,6 @@ func validateToken(signedToken string) (bool, error) {
 		err = errors.New("token expired")
 		return false, err
 	}
-	AuthenticatedUser = usr.User{}
+	//AuthenticatedUser = usr.User{}
 	return true, nil
 }

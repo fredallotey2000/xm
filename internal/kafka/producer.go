@@ -11,7 +11,6 @@ import (
 	lgg "xm/internal/logger"
 )
 
-
 func NewKafkaProducer(cmpProducerChan chan Message, conf confg.Configuration, log lgg.Logger) {
 
 	w := &kafka.Writer{
@@ -31,7 +30,7 @@ func NewKafkaProducer(cmpProducerChan chan Message, conf confg.Configuration, lo
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Sent message: %s\n", m)
+	//fmt.Printf("Sent message: %s\n", m)
 	fmt.Printf("Producer sent: %d bytes\n", w.Stats().Bytes)
 }
 

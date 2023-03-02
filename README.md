@@ -25,6 +25,12 @@ task bench
 task lint
 
 
+### login credentials to generate jwt token
+
+"email":"u1@xm.com",
+"password":"password"
+
+
 # please Note
 ## unfortunately didnt have enough time to complete the task, nevertheless it was a good exercise :)
 

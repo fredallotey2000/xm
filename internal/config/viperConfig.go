@@ -12,6 +12,7 @@ type Configuration struct {
 	MysqlConfig
 	KafkaConfig
 	LoggerConfig
+	DefaulConfig
 }
 
 func NewViperConfig(cfgFile string) Configuration {
@@ -54,6 +55,9 @@ func getConfiguration() Configuration {
 		LoggerConfig{
 			PathUrl:      getStringOrPanic("logs-path"),
 			LogExtension: getStringOrPanic("logs-extension"),
+		},
+		DefaulConfig{
+			JwtSecret:      getStringOrPanic("jwt-secret"),
 		},
 	}
 }

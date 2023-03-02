@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -31,6 +30,7 @@ type muxRouter struct {
 
 //NewMuxRouter creates a new Mux router for serving http requests
 func NewMuxRouter(compH CompanyHandler, usrH UserHandler, conf confg.Configuration, sigs chan os.Signal, l lgg.Logger) {
+
 	r := mux.NewRouter().StrictSlash(true)
 	m := &muxRouter{
 		lg:              l,
@@ -42,56 +42,63 @@ func NewMuxRouter(compH CompanyHandler, usrH UserHandler, conf confg.Configurati
 		companyH:        compH,
 		userH:           usrH,
 	}
-	// m.router.Use(middleware.JSONMiddleware)
+	m.router.Use(mw.JSONMiddleware)
 	// m.router.Use(middleware.LoggingMiddleware)
 	// m.router.Use(middleware.TimeoutMiddleware)
 	//m.router.Use(middlewares.RequestBodyLimiter)
 
 	//m.confi
+	m.ConfigureUserHandler()
+	m.ConfigureCompanyHandler()
 	go m.Stop()
 	m.Start()
+}
+
+// Start() starts the http server to handle requests
+func (m *muxRouter) Start() {
+	m.lg.Info("server started")
+	m.httpServer.Addr = m.ServerIp
+	m.httpServer.Handler = m.router
+	if err := m.httpServer.ListenAndServe(); err != nil {
+		log.Panic(err)
+	}
 }
 
 // Stop() shuts down the server when signal channel receives a signal
 func (m *muxRouter) Stop() {
 	<-m.signalChan
-	//m.lg.Info("stopping http server")
+	m.lg.Info("stopping http server")
 	context, cancel := context.WithTimeout(context.Background(), time.Duration(m.ShutDownTimeout))
 	defer cancel()
 	err := m.httpServer.Shutdown(context)
 	if err != nil {
 		m.lg.Fatal("http server shutdown", err)
 	}
+	m.lg.Info("http server shutdown successful")
 }
 
-// Start() starts the http server to handle requests
-func (m *muxRouter) Start() {
-	//m.lg.Info("server started")
-	m.httpServer.Addr = m.ServerIp
-	//m.httpServer.Addr = ":8081"
-	m.httpServer.Handler = m.router
-	if err := m.httpServer.ListenAndServe(); err != nil {
-		fmt.Println("server started")
-		log.Panic(err)
-	}
+func (m *muxRouter) ConfigureCompanyHandler() {
 
-}
-
-func (m *muxRouter) ConfigureHandler() {
-
-	m.router.Methods("GET").Path("/api/v1/" + "companies/{deploymentId}").
+	m.router.Methods("GET").Path("/api/v1/healthcheck").
 		Handler(http.HandlerFunc(m.companyH.CheckHealth))
 
-	m.router.Methods("GET").Path("/api/v1/" + "companies/{deploymentId}").
-		Handler(http.HandlerFunc(m.companyH.GetCompany))
+	m.router.Methods("GET").Path("/api/v1/" + "companies/{companyId}").
+		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.GetCompany)))
 
 	m.router.Methods("POST").Path("/api/v1/" + "companies").
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.CreateCompany)))
 
-	m.router.Methods("PATCH").Path("/api/v1/" + "companies/{deploymentId}").
+	m.router.Methods("PATCH").Path("/api/v1/" + "companies/{companyId}").
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.UpdateCompany)))
 
-	m.router.Methods("DELETE").Path("/api/v1/" + "companies/{deploymentId}").
+	m.router.Methods("DELETE").Path("/api/v1/" + "companies/{companyId}").
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.DeleteCompany)))
+
+}
+
+func (m *muxRouter) ConfigureUserHandler() {
+
+	m.router.Methods("POST").Path("/api/v1/users/" + "auth").
+		Handler(http.HandlerFunc(m.userH.AuthenticateUser))
 
 }

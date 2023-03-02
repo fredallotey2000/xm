@@ -13,20 +13,13 @@ type ErrorResp struct {
 	Error string
 }
 
-// Interface to be implemented by all routers
-type Router interface {
-	Get(uri string, f func(w http.ResponseWriter, r *http.Request))
-	Post(uri string, f func(w http.ResponseWriter, r *http.Request))
-	Put(uri string, f func(w http.ResponseWriter, r *http.Request))
-	Patch(uri string, f func(w http.ResponseWriter, r *http.Request))
-	Delete(uri string, f func(w http.ResponseWriter, r *http.Request))
-
-	Start()
-	Stop()
+type Response struct {
+	Data  interface{} `json:"data,omitempty"`
+	Error string      `json:"error,omitempty"`
 }
 
-// writeResponse writes the response to the http reponse object
-func WriteResponse(w http.ResponseWriter, status int, data interface{}, err error) {
+//writeResponse writes the response to the http reponse object
+func writeResponse(w http.ResponseWriter, status int, data interface{}, err error) {
 	w.WriteHeader(status)
 	if err != nil {
 		resp := ErrorResp{
@@ -41,3 +34,18 @@ func WriteResponse(w http.ResponseWriter, status int, data interface{}, err erro
 		fmt.Fprintf(w, "error encoding resp %v:%s", data, err)
 	}
 }
+
+// // writeResponse is a helper method that allows to write and HTTP status & response
+// func writeResponse2(w http.ResponseWriter, status int, data interface{}, err error) {
+// 	w.WriteHeader(status)
+// 	resp := Response{
+// 		Data: data,
+// 	}
+// 	if err != nil {
+// 		resp.Error = fmt.Sprint(err)
+// 	}
+// 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+// 	if err := json.NewEncoder(w).Encode(resp); err != nil {
+// 		fmt.Fprintf(w, "error encoding resp %v:%s", resp, err)
+// 	}
+// }
