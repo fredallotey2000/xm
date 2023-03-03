@@ -1,4 +1,4 @@
-# How to run the solution
+# Documentation
 
 ## To bring the services up use (on the console)
 task up
@@ -25,19 +25,29 @@ task bench
 task lint
 
 
-### login credentials to generate jwt token
-url - http://localhost:8080/api/v1/users/auth
-method - POST
+# How to run the solution
+
+## Health check
+url - http://localhost:8080/api/v1/healthcheck
+
+## login credentials to generate jwt token
+url - http://localhost:8080/api/v1/users/auth <br>
+method - POST <br>
 request-object
+```
 {
 "email":"u1@xm.com",
 "password":"password"
 }
+```
 
-### Add a company
-url - http://localhost:8080/api/v1/companies
-method - POST
+output - jwt token
+
+## Add a company
+url - http://localhost:8080/api/v1/companies <br>
+method - POST <br>
 request-object
+```
 {
     "name": "abc ltd",
     "description": "IT company",
@@ -45,18 +55,26 @@ request-object
     "registered": true,
     "type": "corporate"
 }
-### Get a company
-url - http://localhost:8080/api/v1/companies/{companyId}
+```
+output - http status created with link to resouce in header location object
+
+## Get a company
+url - http://localhost:8080/api/v1/companies/{companyId} <br>
 method - GET
 
-### Delete a company
-url - http://localhost:8080/api/v1/companies/{companyId}
+output - company object
+
+## Delete a company
+url - http://localhost:8080/api/v1/companies/{companyId} <br>
 method - DELETE
 
-### Patch a company
-url - http://localhost:8080/api/v1/companies
-method - PATCH
+output - http status accepted with link to resouce in header location object
+
+## Patch a company
+url - http://localhost:8080/api/v1/companies <br>
+method - PATCH <br>
 request-object
+```
 {
     "name": "abc ltd",
     "description": "IT company",
@@ -64,6 +82,9 @@ request-object
     "registered": true,
     "type": "corporate"
 }
+```
+
+output - http status accepted with link to resouce in header location object
 
 # Note
 ## unfortunately didnt have enough time to complete the task, nevertheless it was a good exercise :)

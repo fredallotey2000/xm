@@ -20,18 +20,21 @@ func NewKafkaProducer(cmpProducerChan chan Message, conf confg.Configuration, lo
 	}
 	defer w.Close()
 	//comunicating by sharing memoryreceiving messages from http request
-	m := <-cmpProducerChan
-	encoded, err := json.Marshal(m)
-	if err != nil {
-		panic(err)
+	for {
+		m := <-cmpProducerChan
+		//fmt.Printf("prod: %+v\n", m)
+		encoded, err := json.Marshal(m)
+		if err != nil {
+			panic(err)
+		}
+		err = w.WriteMessages(context.Background(), kafka.Message{Value: encoded})
+		if err != nil {
+			panic(err)
+		}
+		//fmt.Printf("Sent message: %s\n", m)
+		fmt.Printf("Producer sent: %d bytes\n", w.Stats().Bytes)
 	}
 
-	err = w.WriteMessages(context.Background(), kafka.Message{Value: encoded})
-	if err != nil {
-		panic(err)
-	}
-	//fmt.Printf("Sent message: %s\n", m)
-	fmt.Printf("Producer sent: %d bytes\n", w.Stats().Bytes)
 }
 
 // //creates and starts a new kafka producer

@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"gopkg.in/go-playground/validator.v9"
+	"github.com/go-playground/validator/v10"
 )
 
 type _validator struct {
@@ -16,10 +16,12 @@ func NewPlayGroundValidator() Validator {
 }
 
 // validates the json object passed as argument
-func (v *_validator) ValidateJSON(data interface{}) (error) {
+func (v *_validator) ValidateJSON(data interface{}) error {
 	// Validates the JSON object and makes sure it meets the required request fields
+
 	if err := v.validator.Struct(data); err != nil {
 		return err
+
 	}
 	return nil
 }

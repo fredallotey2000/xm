@@ -82,23 +82,23 @@ func (m *muxRouter) ConfigureCompanyHandler() {
 	m.router.Methods("GET").Path("/api/v1/healthcheck").
 		Handler(http.HandlerFunc(m.companyH.CheckHealth))
 
-	m.router.Methods("GET").Path("/api/v1/" + "companies/{companyId}").
+	m.router.Methods("GET").Path(companyURI + "/{companyId}").
 		Handler(http.HandlerFunc((m.companyH.GetCompany)))
 
-	m.router.Methods("POST").Path("/api/v1/" + "companies").
+	m.router.Methods("POST").Path(companyURI).
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.CreateCompany)))
 
-	m.router.Methods("PATCH").Path("/api/v1/" + "companies/{companyId}").
+	m.router.Methods("PATCH").Path(companyURI + "/{companyId}").
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.UpdateCompany)))
 
-	m.router.Methods("DELETE").Path("/api/v1/" + "companies/{companyId}").
+	m.router.Methods("DELETE").Path(companyURI + "/{companyId}").
 		Handler(http.HandlerFunc(mw.JWTAuth(m.companyH.DeleteCompany)))
 
 }
 
 func (m *muxRouter) ConfigureUserHandler() {
 
-	m.router.Methods("POST").Path("/api/v1/users/" + "auth").
+	m.router.Methods("POST").Path(userURI + "/auth").
 		Handler(http.HandlerFunc(m.userH.AuthenticateUser))
 
 }

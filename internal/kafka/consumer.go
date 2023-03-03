@@ -34,9 +34,7 @@ func NewKafkaConsumer(cmpConsumerChan chan Message, conf confg.Configuration, lo
 		MinBytes:  10e3,
 		MaxBytes:  10e6,
 	})
-
 	defer r.Close()
-
 	for {
 		m, err := r.FetchMessage(context.Background())
 		if err != nil {
@@ -46,7 +44,7 @@ func NewKafkaConsumer(cmpConsumerChan chan Message, conf confg.Configuration, lo
 			panic(err)
 		}
 		//lg.
-		//fmt.Printf("Topic %s msg: %s\n", m.Topic, m.Value)
+		fmt.Printf("msg: %+v\n", m.Value)
 		go mq.processMessage(m)
 
 	}
@@ -81,7 +79,7 @@ func (mq *messageQueue) processMessage(msg kafka.Message) {
 
 //function to update company info
 func (mq *messageQueue) updateCompany(m Message) {
-	_, err := mq.service.ModifyCompany(context.Background(), cmp.Company(m.Company), m.Id)
+	_, err := mq.service.ModifyCompany(context.Background(), cmp.Company(m.CompanyPatch), m.Id)
 	if err != nil {
 		mq.lg.MqError("Patching", "", err)
 	}

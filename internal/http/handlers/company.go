@@ -42,16 +42,43 @@ func NewCompanyHandler(pChan chan kf.Message, ds cmp.Service, v v.Validator, log
 	return h
 }
 
+// // function to receive and process http posts to create a new company
+// func (h *companyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
+// 	var comp cmp.Company
+
+// 	// Read the request body
+// 	if err := json.NewDecoder(r.Body).Decode(&comp); err != nil {
+// 		h.lg.HttpError(r, "CreateCompany", err)
+// 		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
+// 		return
+// 	}
+// 	//Validates the JSON object and makes sure it meets the required request fields
+// 	if err := h.validator.ValidateJSON(comp); err != nil {
+// 		h.lg.HttpError(r, "CreateCompany", err)
+// 		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
+// 		return
+// 	}
+
+// 	cmp, err := h.service.AddCompany(r.Context(), comp)
+// 	if err != nil {
+// 		h.lg.HttpError(r, "CreateCompany", err)
+// 		writeResponse(w, http.StatusInternalServerError, nil, err)
+// 		return
+// 	}
+// 	writeResponse(w, http.StatusCreated, cmp, nil)
+// }
+
 // function to receive and process http posts to create a new company
 func (h *companyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
 	var comp cmp.Company
 
-	// Read the request body
+	//Read the request body
 	if err := json.NewDecoder(r.Body).Decode(&comp); err != nil {
 		h.lg.HttpError(r, "CreateCompany", err)
 		writeResponse(w, http.StatusBadRequest, nil, ErrorBadRequest)
 		return
 	}
+
 	//Validates the JSON object and makes sure it meets the required request fields
 	if err := h.validator.ValidateJSON(comp); err != nil {
 		h.lg.HttpError(r, "CreateCompany", err)
@@ -59,20 +86,21 @@ func (h *companyHandler) CreateCompany(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cmp, err := h.service.AddCompany(r.Context(), comp)
+	compId, err := h.service.AddCompany(r.Context(), comp)
 	if err != nil {
 		h.lg.HttpError(r, "CreateCompany", err)
 		writeResponse(w, http.StatusInternalServerError, nil, err)
 		return
 	}
-	writeResponse(w, http.StatusCreated, cmp, nil)
+	w.Header().Add("location", companyURI+"/"+compId)
+	writeResponse(w, http.StatusCreated, compId, nil)
 }
 
 // function to receive and process http patch to update a new company
 func (h *companyHandler) UpdateCompany(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	compId := vars["companyId"]
-	var cmp cmp.Company
+	var cmp cmp.CompanyPatch
 
 	// Read the request body
 	if err := json.NewDecoder(r.Body).Decode(&cmp); err != nil {
@@ -81,11 +109,12 @@ func (h *companyHandler) UpdateCompany(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	kfMsg := kf.Message{
-		Company:       cmp,
+		CompanyPatch:  cmp,
 		Id:            compId,
 		RequestMethod: r.Method,
 	}
 	h.producerChan <- kfMsg
+	w.Header().Add("location", companyURI+"/"+compId)
 	writeResponse(w, http.StatusAccepted, nil, nil)
 }
 
@@ -100,6 +129,7 @@ func (h *companyHandler) DeleteCompany(w http.ResponseWriter, r *http.Request) {
 		RequestMethod: r.Method,
 	}
 	h.producerChan <- kfMsg
+	w.Header().Add("location", companyURI+"/"+compId)
 	writeResponse(w, http.StatusAccepted, nil, nil)
 
 }

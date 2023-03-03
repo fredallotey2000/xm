@@ -21,7 +21,7 @@ import (
 )
 
 //channels for shared memory communication betweeen message queue(kafka) and http request
-var producerChan = make(chan kafka.Message,1)
+var producerChan = make(chan kafka.Message)
 
 func openLogFile(logFileName string) *os.File {
 
@@ -78,7 +78,7 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 
 	//create and start a mux router to serve http requests
-	
+
 	handler.NewMuxRouter(
 		cmpH,
 		userH,

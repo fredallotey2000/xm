@@ -19,9 +19,12 @@ type Response struct {
 	Error string      `json:"error,omitempty"`
 }
 
+var companyURI = "/api/v1/companies"
+var userURI = "/api/v1/users"
+
 //writeResponse writes the response to the http reponse object
 func writeResponse(w http.ResponseWriter, status int, data interface{}, err error) {
-	if data == nil {
+	if data == nil && err == nil {
 		w.WriteHeader(status)
 		fmt.Fprint(w)
 		return
@@ -32,14 +35,23 @@ func writeResponse(w http.ResponseWriter, status int, data interface{}, err erro
 			fmt.Fprint(w, "No record found")
 			return
 		}
-		resp := ErrorResp{
-			Error: fmt.Sprint(err),
+		var resp ErrorResp
+		if http.StatusBadRequest == status {
+			resp = ErrorResp{
+				Error: fmt.Sprint(err),
+			}
+		} else {
+			resp = ErrorResp{
+				Error: "Error processing your request, refer to documentation",
+			}
 		}
+
 		w.WriteHeader(http.StatusInternalServerError)
 		if err := json.NewEncoder(w).Encode(resp); err != nil {
 			fmt.Fprintf(w, "error encoding resp %v:%v", resp, err)
 			return
 		}
+		return
 	}
 	w.WriteHeader(status)
 	if status == http.StatusCreated {
