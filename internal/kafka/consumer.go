@@ -44,7 +44,7 @@ func NewKafkaConsumer(cmpConsumerChan chan Message, conf confg.Configuration, lo
 			panic(err)
 		}
 		//lg.
-		fmt.Printf("msg: %+v\n", m.Value)
+		//fmt.Printf("msg: %+v\n", m.Value)
 		go mq.processMessage(m)
 
 	}

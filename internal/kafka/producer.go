@@ -3,7 +3,6 @@ package kafka
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	confg "xm/internal/config"
 
 	"github.com/segmentio/kafka-go"
@@ -32,7 +31,7 @@ func NewKafkaProducer(cmpProducerChan chan Message, conf confg.Configuration, lo
 			panic(err)
 		}
 		//fmt.Printf("Sent message: %s\n", m)
-		fmt.Printf("Producer sent: %d bytes\n", w.Stats().Bytes)
+		//fmt.Printf("Producer sent: %d bytes\n", w.Stats().Bytes)
 	}
 
 }
